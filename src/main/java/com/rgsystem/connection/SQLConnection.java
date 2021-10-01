@@ -15,7 +15,11 @@ public class SQLConnection implements DBConnection{
         this.password = password;
     }
 
-    public Connection getConnection() throws SQLException{
-        return DriverManager.getConnection(this.host, this.userName, this.password);
+    public Connection getConnection() throws ConnectionFailedException{
+        try {
+            return DriverManager.getConnection(this.host, this.userName, this.password);
+        } catch (SQLException e) {
+            throw new ConnectionFailedException("Connection to the database failed");
+        }
     }
 }
