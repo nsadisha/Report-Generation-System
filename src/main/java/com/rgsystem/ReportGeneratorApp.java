@@ -1,12 +1,18 @@
 package com.rgsystem;
 
+import com.rgsystem.connection.ConnectionFailedException;
 import com.rgsystem.connection.DBConnection;
 import com.rgsystem.database.Database;
+import com.rgsystem.database.QueryExecutionFailedException;
 import com.rgsystem.input.Inputs;
 import com.rgsystem.report.Period;
 import com.rgsystem.report.Report;
 import com.rgsystem.report.ReportFactory;
 import com.rgsystem.report.ReportResult;
+import com.rgsystem.report.reports.ReportGenerationFailedException;
+import com.rgsystem.report.results.NullReportException;
+
+import java.sql.SQLException;
 
 public class ReportGeneratorApp {
     //database and connection
@@ -27,15 +33,16 @@ public class ReportGeneratorApp {
         try {
             this.database.connect(this.connection.getConnection());
             ReportFactory factory = new ReportFactory(this.database, this.period);
-            Report report = factory.getInstance("daily-report");
+            Report report = factory.getInstance("daily-sales");
             ReportResult reportResult = report.getReport();
 
             //test
-//            while (reportResult.getResult().next()){
-//                System.out.println(reportResult.getResult().getString("total_price"));
-//            }
-        } catch (Exception e) {
+            while (reportResult.getResult().next()){
+                System.out.println(reportResult.getResult().getString("total_price"));
+            }
+        } catch (ConnectionFailedException | QueryExecutionFailedException | ReportGenerationFailedException | NullReportException e) {
             System.out.println("Exception from app: " + e.getMessage());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
