@@ -15,8 +15,9 @@ public class SQLDatabase implements Database{
     }
 
     //Create a statement to execute a query(should be called before calling the executeQuery() method.)
-    public void createStatement() throws SQLException {
+    public Statement createStatement() throws SQLException {
         this.statement = this.connection.createStatement();
+        return null;
     }
 
     //Execute a SQL query

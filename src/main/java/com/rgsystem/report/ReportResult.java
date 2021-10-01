@@ -6,4 +6,5 @@ import java.sql.ResultSet;
 
 public interface ReportResult {
     ResultSet getResult() throws NullReportException;
+
 }
