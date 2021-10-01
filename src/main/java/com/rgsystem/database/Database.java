@@ -1,11 +1,12 @@
 package com.rgsystem.database;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface Database {
 
-    void createStatement() throws SQLException;
-    ResultSet executeQuery(String query) throws Exception;
+    void connect(Connection connection);
+    ResultSet executeQuery(String query) throws QueryExecutionFailedException;
 
 }
