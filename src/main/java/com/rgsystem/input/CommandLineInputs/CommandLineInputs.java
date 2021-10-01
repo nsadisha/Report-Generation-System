@@ -1,4 +1,4 @@
-package com.rgsystem.input.CommandLineInputs;
+package com.rgsystem.input.commandlineinputs;
 
 import com.rgsystem.input.Inputs;
 

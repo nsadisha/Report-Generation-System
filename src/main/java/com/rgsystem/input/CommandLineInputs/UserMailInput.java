@@ -1,4 +1,4 @@
-package com.rgsystem.input.CommandLineInputs;
+package com.rgsystem.input.commandlineinputs;
 
 import com.rgsystem.input.InvalidInputException;
 
@@ -20,7 +20,16 @@ public class UserMailInput extends CommandLineInputs {
             throw new InvalidInputException("Please provide the user email as the fifth argument");
         }
 
+        if(!(isEmailValid(userEmail))){
+            throw new InvalidInputException("Please provide a valid user email as the fifth argument");
+        }
+
         return userEmail;
+    }
+
+    static boolean isEmailValid(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
     }
 
 }

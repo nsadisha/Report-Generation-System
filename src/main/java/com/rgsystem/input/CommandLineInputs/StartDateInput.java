@@ -1,4 +1,4 @@
-package com.rgsystem.input.CommandLineInputs;
+package com.rgsystem.input.commandlineinputs;
 
 import com.rgsystem.input.InvalidInputException;
 
@@ -20,7 +20,18 @@ public class StartDateInput extends CommandLineInputs {
             throw new InvalidInputException("Please provide the start date as the second argument");
         }
 
+        if(!(isDateValid(startDate))){
+            throw new InvalidInputException("Please provide the start date in dd/mm/yyyy format");
+        }
+
         return startDate;
+    }
+
+    static boolean isDateValid(String Date) {
+        if (Date.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
+            return true;
+        else
+            return false;
     }
 
 }

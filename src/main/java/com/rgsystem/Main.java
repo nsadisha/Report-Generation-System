@@ -1,6 +1,6 @@
 package com.rgsystem;
 
-import com.rgsystem.input.CommandLineInputs.*;
+import com.rgsystem.input.commandlineinputs.*;
 import com.rgsystem.input.Inputs;
 import com.rgsystem.input.InvalidInputException;
 
