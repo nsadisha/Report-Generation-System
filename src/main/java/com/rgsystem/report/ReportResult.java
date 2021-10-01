@@ -1,7 +1,9 @@
 package com.rgsystem.report;
 
-import java.sql.SQLException;
+import com.rgsystem.report.results.NullReportException;
+
+import java.sql.ResultSet;
 
 public interface ReportResult {
-    void print() throws SQLException;
+    ResultSet getResult() throws NullReportException;
 }
