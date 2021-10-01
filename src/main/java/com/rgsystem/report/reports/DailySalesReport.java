@@ -16,7 +16,7 @@ public class DailySalesReport implements Report {
     }
 
     @Override
-    public ReportResult getReport() throws Exception{
+    public ReportResult getReport() throws ReportGenerationFailedException{
         ReportResult result;
         try{
             //getting start date and end date as strings
@@ -31,7 +31,7 @@ public class DailySalesReport implements Report {
                 database.executeQuery(query)
             );
         }catch(Exception e){
-            throw new ReportGenerationFailedException(e.getMessage());
+            throw new ReportGenerationFailedException("Report generation failed");
         }
 
         return result;
