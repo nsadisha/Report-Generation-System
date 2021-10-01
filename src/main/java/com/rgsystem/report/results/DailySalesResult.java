@@ -12,7 +12,7 @@ public class DailySalesResult implements ReportResult {
 
     public ResultSet getResult() throws NullReportException {
         if(this.result == null){
-            throw new NullReportException("");
+            throw new NullReportException("Result from the report is null");
         }
         return this.result;
     }
