@@ -20,8 +20,8 @@ public class ExcelSheetTableData extends ExcelSheet{
 
         ResultSetMetaData metaData = super.result.getMetaData();
         int numberOfColumns = metaData.getColumnCount();
-
-        int rowCount = 3;
+        int numberOfRows = sheet.getPhysicalNumberOfRows();
+        int rowCount = numberOfRows+2;
 
         while (super.result.next()) {
             Row row = super.sheet.createRow(rowCount++);
