@@ -9,5 +9,8 @@
         <module name="Report-Generation-System" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Report-Generation-System" target="12" />
+    </bytecodeTargetLevel>
   </component>
 </project>
