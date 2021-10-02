@@ -7,28 +7,25 @@ import java.sql.Statement;
 
 public class SQLDatabase implements Database{
 
-    final Connection connection;
+    Connection connection;
     Statement statement;
 
-    public SQLDatabase(Connection connection){
+    public void connect(Connection connection){
         this.connection = connection;
     }
 
-    //Create a statement to execute a query(should be called before calling the executeQuery() method.)
-    public Statement createStatement() throws SQLException {
-        this.statement = this.connection.createStatement();
-        return null;
-    }
-
     //Execute a SQL query
-    public ResultSet executeQuery(String query) throws SQLException {
-        //Checking if the statement is initialized or not
-        if(this.statement == null){
-            throw new SQLException("Uninitialized statement.");
-        }
+    public ResultSet executeQuery(String query) throws QueryExecutionFailedException {
+        try {
 
-        //Return the result
-        return this.statement.executeQuery(query);
+            //creating a statement
+            this.statement = this.connection.createStatement();
+            //Return the result
+            return this.statement.executeQuery(query);
+
+        } catch (SQLException e) {
+            throw new QueryExecutionFailedException("SQL database query execution failed");
+        }
     }
 
 }

@@ -44,7 +44,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.rgsystem.Main" />
       <module name="Report-Generation-System" />
-      <option name="PROGRAM_PARAMETERS" value="monthlysales 01/09/2021 01/10/2021 email hasinisama@gmail.com" />
+      <option name="PROGRAM_PARAMETERS" value="monthlysales 2021/09/01 2021/01/10 email hasinisama@gmail.com" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.rgsystem.*" />
@@ -90,5 +90,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

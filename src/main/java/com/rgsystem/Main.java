@@ -5,16 +5,15 @@ import com.rgsystem.connection.SQLConnection;
 import com.rgsystem.database.Database;
 import com.rgsystem.database.SQLDatabase;
 import com.rgsystem.input.Inputs;
-import com.rgsystem.input.commandlineinputs.*;
 import com.rgsystem.report.Period;
 import com.rgsystem.report.Report;
 import com.rgsystem.report.ReportFactory;
-import com.rgsystem.report.ReportResult;
 import com.rgsystem.report.excelsheet.ExcelSheet;
 import com.rgsystem.report.excelsheet.ExcelSheetHeader;
 import com.rgsystem.report.excelsheet.ExcelSheetTableData;
 import com.rgsystem.report.excelsheet.ExcelSheetTableHeader;
-
+import com.rgsystem.input.CommandLineInputs;
+import com.rgsystem.report.results.ReportResult;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -26,12 +25,6 @@ import java.sql.ResultSet;
 public class Main {
     public static void main(String[] args) throws Exception{
 
-        Inputs type = new ReportTypeInput(args);
-        Inputs start = new StartDateInput(args);
-        Inputs end = new EndDateInput(args);
-        Inputs output = new OutputFormatInput(args);
-        Inputs email = new UserMailInput(args);
-
         String excelFilePath = "Daily-Sales.xlsx";
 
         DBConnection connection = new SQLConnection(
@@ -40,14 +33,19 @@ public class Main {
                 ""
         );
 
-        Database database = new SQLDatabase(connection.getConnection());
-        database.createStatement();
+        Database database = new SQLDatabase();
+        Inputs inputs = new CommandLineInputs(args);
+        ReportGeneratorApp app = new ReportGeneratorApp(connection, database, inputs);
+
+        //start the app
+        app.execute();
+
 
         Period period = new Period("2021-09-20", "2021-10-30");
         ReportFactory reportFactory = new ReportFactory(database, period);
         Report report = reportFactory.getInstance("daily-sales");
 
-        ReportResult res = report.getReport();
+        ReportResult res = report.getSummaryReport();
         ResultSet result = res.getResult();
 
         XSSFWorkbook workbook = new XSSFWorkbook();

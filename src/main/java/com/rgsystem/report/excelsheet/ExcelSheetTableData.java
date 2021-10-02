@@ -37,13 +37,16 @@ public class ExcelSheetTableData extends ExcelSheet{
                 else if (valueObject instanceof Double) {
                     cell.setCellValue((double) valueObject);
                 }
+                else if (valueObject instanceof Long) {
+                    cell.setCellValue((long) valueObject);
+                }
                 else if (valueObject instanceof Float) {
                     cell.setCellValue((float) valueObject);
                 }
-                else if (valueObject instanceof Timestamp) {
+                else if (valueObject instanceof Date) {
                     CellFormat dateCellFormat = new DateCellFormat();
                     dateCellFormat.formatCell(workbook, cell);
-                    cell.setCellValue((Timestamp) valueObject);
+                    cell.setCellValue((Date) valueObject);
                 }
                 else {
                     cell.setCellValue((String) valueObject);

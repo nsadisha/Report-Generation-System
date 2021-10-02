@@ -1,7 +1,8 @@
 package com.rgsystem.report;
 
-import java.sql.ResultSet;
+import com.rgsystem.report.results.ReportResult;
 
 public interface Report {
-    ReportResult getReport() throws Exception;
+    ReportResult getSummaryReport() throws Exception;
+    ReportResult getFullReport() throws Exception;
 }
