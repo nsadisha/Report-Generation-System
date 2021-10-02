@@ -1,10 +1,9 @@
 package com.rgsystem.report.reports;
 
 import com.rgsystem.database.Database;
-import com.rgsystem.report.results.DailySalesResult;
+import com.rgsystem.report.results.ReportResult;
 import com.rgsystem.report.Period;
 import com.rgsystem.report.Report;
-import com.rgsystem.report.ReportResult;
 
 public class DailySalesReport implements Report {
     Database database;
@@ -16,22 +15,50 @@ public class DailySalesReport implements Report {
     }
 
     @Override
-    public ReportResult getReport() throws Exception{
+    public ReportResult getSummaryReport() throws Exception{
         ReportResult result;
         try{
             //getting start date and end date as strings
             String startDate = this.period.getStartDate();
             String endDate = this.period.getEndDate();
             //SQL query to execute
-            String query = "SELECT * FROM orders WHERE" +
-                    " date BETWEEN'" +startDate+ "' AND '" +endDate+ "' ORDER BY date ASC";
+            String query = "SELECT CAST(date as date) 'Date', COUNT(*) 'Transactions', SUM(total_price) 'Net Sales' " +
+                    "FROM orders " +
+                    "WHERE date BETWEEN '"+startDate+"' AND '"+endDate+"' " +
+                    "GROUP BY CAST(date as date) " +
+                    "ORDER BY date DESC";
 
             //Report result
-            result = new DailySalesResult(
+            result = new ReportResult(
                 database.executeQuery(query)
             );
         }catch(Exception e){
-            throw new ReportGenerationFailedException(e.getMessage());
+            throw new ReportGenerationFailedException("Summery report generation failed: "+e.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public ReportResult getFullReport() throws Exception {
+        ReportResult result;
+        try{
+            //getting start date and end date as strings
+            String startDate = this.period.getStartDate();
+            String endDate = this.period.getEndDate();
+            //SQL query to execute
+            String query = "SELECT CAST(date as date) 'Date', order_id 'Order ID', email 'Email', " +
+                    "total_price 'Total Revenue', status 'Status' " +
+                    "FROM orders " +
+                    "WHERE date BETWEEN '"+startDate+"' AND '"+endDate+"' " +
+                    "ORDER BY date DESC";
+
+            //Report result
+            result = new ReportResult(
+                    database.executeQuery(query)
+            );
+        }catch(Exception e){
+            throw new ReportGenerationFailedException("Summery report generation failed: "+e.getMessage());
         }
 
         return result;
