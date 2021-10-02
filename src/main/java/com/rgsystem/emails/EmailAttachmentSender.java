@@ -1,49 +1,29 @@
 package com.rgsystem.emails;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.*;
 import java.io.File;
-import java.util.Properties;
+import java.io.IOException;
 
 public class EmailAttachmentSender {
-    private static String host="smtp.gmail.com";
-    private static String port="587";
-    private static String userName="lbookbae@gmail.com";
-    private static String password="bookbae1234";
-    private String toAddress;
-    private String subject;
-    private String message;
 
+    protected String toAddress;
+    public String startingMonth;
+    public String endingMonth;
 
-    //constructor of the class
-    public EmailAttachmentSender(String toAddress, String subject, String message) throws Exception{
-        this.toAddress = toAddress;
-        this.subject = subject;
-        this.message = message;
+    public EmailAttachmentSender(String toAddress,String startingMonth,String endingMonth) throws IOException, MessagingException {
 
+        SessionCreator session=new SessionCreator();
+        Message message1=new MimeMessage(session.createSession());
 
-        //set SMTP server properties
-        Properties properties=new Properties();
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", port);
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.user", userName);
-        properties.put("mail.password", password);
+        SubjectCreator subjectCreator=new SubjectCreator(startingMonth,endingMonth);
+        message1.setSubject(subjectCreator.setSubject());
 
-        // creates a new session with an authenticator
-        Session session=Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(userName,password);
-            }
-        });
-
-        Message message1=new MimeMessage(session);
-        message1.setSubject(subject);
+        MimeBodyPart attachment=new MimeBodyPart();
+        attachment.attachFile(new File("report/Assignment-2 2021 (2) (1).pdf"));
 
 
         Address addressTo=new InternetAddress(toAddress);
@@ -51,26 +31,12 @@ public class EmailAttachmentSender {
 
         MimeMultipart multipart=new MimeMultipart();
 
-        MimeBodyPart attachment=new MimeBodyPart();
-        attachment.attachFile(new File("report/Assignment-2 2021 (2) (1).pdf"));
-
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText(message);
         multipart.addBodyPart(attachment);
 
         message1.setContent(multipart);
 
         Transport.send(message1);
+
     }
-
-
-
-
-
-
-
-
-
-
 
 }
