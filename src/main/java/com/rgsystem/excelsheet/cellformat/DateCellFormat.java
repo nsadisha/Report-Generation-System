@@ -1,4 +1,4 @@
-package com.rgsystem.report.excelsheet.cellformat;
+package com.rgsystem.excelsheet.cellformat;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -9,12 +9,14 @@ public class DateCellFormat implements CellFormat{
 
 
     @Override
-    public void formatCell(XSSFWorkbook workbook, Cell cell) {
+    public CellStyle formatCell(XSSFWorkbook workbook, Cell cell) {
+
         CellStyle cellStyle = workbook.createCellStyle();
         CreationHelper creationHelper = workbook.getCreationHelper();
-        cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+        cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd"));
         cell.setCellStyle(cellStyle);
 
+        return cellStyle;
     }
 
 }

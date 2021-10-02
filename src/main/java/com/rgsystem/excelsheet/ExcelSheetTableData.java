@@ -1,7 +1,7 @@
-package com.rgsystem.report.excelsheet;
+package com.rgsystem.excelsheet;
 
-import com.rgsystem.report.excelsheet.cellformat.CellFormat;
-import com.rgsystem.report.excelsheet.cellformat.DateCellFormat;
+import com.rgsystem.excelsheet.cellformat.CellFormat;
+import com.rgsystem.excelsheet.cellformat.DateCellFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -11,8 +11,8 @@ import java.sql.*;
 
 public class ExcelSheetTableData extends ExcelSheet{
 
-    public ExcelSheetTableData(ResultSet result, XSSFSheet sheet, XSSFWorkbook workbook) {
-        super(result, sheet, workbook);
+    public ExcelSheetTableData(ResultSet result, XSSFSheet sheet, XSSFWorkbook workbook, CellFormat format) {
+        super(result, sheet, workbook, format);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ExcelSheetTableData extends ExcelSheet{
         ResultSetMetaData metaData = super.result.getMetaData();
         int numberOfColumns = metaData.getColumnCount();
         int numberOfRows = sheet.getPhysicalNumberOfRows();
-        int rowCount = numberOfRows+2;
+        int rowCount = numberOfRows+3;
 
         while (super.result.next()) {
             Row row = super.sheet.createRow(rowCount++);
@@ -37,19 +37,23 @@ public class ExcelSheetTableData extends ExcelSheet{
                 else if (valueObject instanceof Double) {
                     cell.setCellValue((double) valueObject);
                 }
+                else if (valueObject instanceof Long) {
+                    cell.setCellValue((long) valueObject);
+                }
                 else if (valueObject instanceof Float) {
                     cell.setCellValue((float) valueObject);
                 }
-                else if (valueObject instanceof Timestamp) {
+                else if (valueObject instanceof Date) {
                     CellFormat dateCellFormat = new DateCellFormat();
                     dateCellFormat.formatCell(workbook, cell);
-                    cell.setCellValue((Timestamp) valueObject);
+                    cell.setCellValue((Date) valueObject);
                 }
                 else {
                     cell.setCellValue((String) valueObject);
                 }
 
                 super.sheet.autoSizeColumn(i-1);
+                cell.setCellStyle(this.format.formatCell(workbook, cell));
 
             }
         }
