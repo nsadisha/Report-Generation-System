@@ -1,6 +1,5 @@
-package com.rgsystem.report.excelsheet;
+package com.rgsystem.excelsheet;
 
-import com.rgsystem.report.ReportResult;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 

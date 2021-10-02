@@ -1,4 +1,4 @@
-package com.rgsystem.report.excelsheet;
+package com.rgsystem.excelsheet;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,7 +25,7 @@ public class ExcelSheetTableHeader extends ExcelSheet{
         int numberOfColumns = metaData.getColumnCount();
         int numberOfRows = sheet.getPhysicalNumberOfRows();
 
-        Row headerRow = super.sheet.createRow(numberOfRows+2);
+        Row headerRow = super.sheet.createRow(numberOfRows+3);
 
         // exclude the first column which is the ID field
         for (int i = 1; i <= numberOfColumns; i++) {

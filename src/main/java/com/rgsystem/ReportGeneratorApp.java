@@ -4,9 +4,15 @@ import com.rgsystem.connection.DBConnection;
 import com.rgsystem.database.Database;
 import com.rgsystem.input.Inputs;
 import com.rgsystem.input.InvalidInputException;
+import com.rgsystem.output.ExcelFileOutput;
+import com.rgsystem.output.WorkBookWriter;
 import com.rgsystem.report.Period;
 import com.rgsystem.report.Report;
 import com.rgsystem.report.ReportFactory;
+import com.rgsystem.report.results.ReportResult;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.sql.ResultSet;
 
 public class ReportGeneratorApp {
     //database and connection
@@ -33,6 +39,22 @@ public class ReportGeneratorApp {
             ReportFactory factory = new ReportFactory(this.database, period);
             String reportType = inputs.getReportType();
             Report report = factory.getInstance(reportType);
+
+            //Report results
+            ReportResult summaryReportResult = report.getSummaryReport();
+            ReportResult fullReportResult = report.getFullReport();
+
+            //final results
+            ResultSet summaryReport = summaryReportResult.getResult();
+            ResultSet fullReport = fullReportResult.getResult();
+
+            ExcelFileOutput output = new ExcelFileOutput(inputs.getReportType());
+            XSSFWorkbook workBook = output.getWorkBook(summaryReport, fullReport);
+            WorkBookWriter writer = new WorkBookWriter(workBook);
+
+            //file path
+            String path = "Daily-Sales.xlsx";
+            writer.save(path);
 
         }catch(Exception e){
             System.out.println(e.getMessage());

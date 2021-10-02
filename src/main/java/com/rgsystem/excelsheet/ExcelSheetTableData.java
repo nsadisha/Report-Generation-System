@@ -1,7 +1,7 @@
-package com.rgsystem.report.excelsheet;
+package com.rgsystem.excelsheet;
 
-import com.rgsystem.report.excelsheet.cellformat.CellFormat;
-import com.rgsystem.report.excelsheet.cellformat.DateCellFormat;
+import com.rgsystem.excelsheet.cellformat.CellFormat;
+import com.rgsystem.excelsheet.cellformat.DateCellFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -21,7 +21,7 @@ public class ExcelSheetTableData extends ExcelSheet{
         ResultSetMetaData metaData = super.result.getMetaData();
         int numberOfColumns = metaData.getColumnCount();
         int numberOfRows = sheet.getPhysicalNumberOfRows();
-        int rowCount = numberOfRows+2;
+        int rowCount = numberOfRows+3;
 
         while (super.result.next()) {
             Row row = super.sheet.createRow(rowCount++);
