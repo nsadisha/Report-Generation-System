@@ -11,6 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -27,7 +28,7 @@ public class EmailSender {
         message.setRecipient(Message.RecipientType.TO, addressTo);
 
         MimeBodyPart attachment = new MimeBodyPart();
-        attachment.attachFile(email.getAttachment().getAttachment());
+        attachment.attachFile(new File("test.pdf"));
         MimeMultipart multipart = new MimeMultipart();
         multipart.addBodyPart(attachment);
 

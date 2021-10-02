@@ -1,11 +1,13 @@
 package com.rgsystem.emails;
 
+import java.io.File;
+
 public class Email {
 
     private String toAddress;
     private String subject;
     private String body;
-    private Attachment attachment;
+    private File attachment;
 
     public String getSubject() {
         return subject;
@@ -23,11 +25,11 @@ public class Email {
         this.body = body;
     }
 
-    public Attachment getAttachment() {
+    public File getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(Attachment attachment) {
+    public void setAttachment(File attachment) {
         this.attachment = attachment;
     }
 
