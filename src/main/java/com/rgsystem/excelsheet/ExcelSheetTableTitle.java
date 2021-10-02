@@ -17,14 +17,13 @@ public class ExcelSheetTableTitle extends ExcelSheet{
         super(result, sheet, workbook, format);
     }
 
-    @Override
-    public void writeLines() throws SQLException {
+    public void writeLines(String title) throws SQLException {
 
         // write header line containing column names
         ResultSetMetaData metaData = super.result.getMetaData();
 
         int numberOfColumns = metaData.getColumnCount();
-        int numberOfRows = sheet.getPhysicalNumberOfRows() + 3;
+        int numberOfRows = sheet.getLastRowNum() + 2;
 
         Row headerRow = super.sheet.createRow(numberOfRows);
 
@@ -32,7 +31,7 @@ public class ExcelSheetTableTitle extends ExcelSheet{
         super.sheet.addMergedRegion(cellMerge);
 
         Cell headerCell = headerRow.createCell(0);
-        headerCell.setCellValue("Summary Report");
+        headerCell.setCellValue(title);
         headerCell.setCellStyle(this.format.formatCell(workbook, headerCell));
         super.sheet.autoSizeColumn(0);
 

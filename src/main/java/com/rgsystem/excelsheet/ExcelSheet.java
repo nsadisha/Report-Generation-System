@@ -26,4 +26,6 @@ public abstract class ExcelSheet {
 
     }
 
+    public void writeLines(String title) throws SQLException {
+    }
 }

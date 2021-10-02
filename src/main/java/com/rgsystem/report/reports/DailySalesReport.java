@@ -8,10 +8,12 @@ import com.rgsystem.report.Report;
 public class DailySalesReport implements Report {
     Database database;
     Period period;
+    String reportTitle;
 
-    public DailySalesReport(Database database, Period period){
+    public DailySalesReport(Database database, Period period, String reportTitle){
         this.database = database;
         this.period = period;
+        this.reportTitle = reportTitle;
     }
 
     @Override
@@ -62,5 +64,10 @@ public class DailySalesReport implements Report {
         }
 
         return result;
+    }
+
+    @Override
+    public String getReportTitle() throws Exception {
+        return reportTitle;
     }
 }

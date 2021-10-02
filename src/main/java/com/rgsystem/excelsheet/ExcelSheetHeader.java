@@ -16,7 +16,7 @@ public class ExcelSheetHeader extends ExcelSheet{
     }
 
     @Override
-    public void writeLines() {
+    public void writeLines(String title) {
 
         Row headerRow = super.sheet.createRow(0);
 
@@ -25,7 +25,7 @@ public class ExcelSheetHeader extends ExcelSheet{
 
         Cell headerCell = headerRow.createCell(0);
 
-        headerCell.setCellValue("Daily Sales Report");
+        headerCell.setCellValue(title);
         headerCell.setCellStyle(this.format.formatCell(workbook, headerCell));
 
     }

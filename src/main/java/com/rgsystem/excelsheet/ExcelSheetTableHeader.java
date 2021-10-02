@@ -26,7 +26,7 @@ public class ExcelSheetTableHeader extends ExcelSheet{
         int numberOfColumns = metaData.getColumnCount();
         int numberOfRows = sheet.getPhysicalNumberOfRows();
 
-        Row headerRow = super.sheet.createRow(numberOfRows+3);
+        Row headerRow = super.sheet.createRow(numberOfRows+2);
 
         // exclude the first column which is the ID field
         for (int i = 1; i <= numberOfColumns; i++) {
