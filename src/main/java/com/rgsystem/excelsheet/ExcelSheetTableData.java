@@ -11,8 +11,8 @@ import java.sql.*;
 
 public class ExcelSheetTableData extends ExcelSheet{
 
-    public ExcelSheetTableData(ResultSet result, XSSFSheet sheet, XSSFWorkbook workbook) {
-        super(result, sheet, workbook);
+    public ExcelSheetTableData(ResultSet result, XSSFSheet sheet, XSSFWorkbook workbook, CellFormat format) {
+        super(result, sheet, workbook, format);
     }
 
     @Override
@@ -51,6 +51,10 @@ public class ExcelSheetTableData extends ExcelSheet{
                 else {
                     cell.setCellValue((String) valueObject);
                 }
+
+                super.sheet.autoSizeColumn(i-1);
+                cell.setCellStyle(this.format.formatCell(workbook, cell));
+
             }
         }
     }

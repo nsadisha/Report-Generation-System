@@ -15,7 +15,7 @@ public class ReportFactory {
     public Report getInstance(String type) {
         Report report = null;
             if (type.equals("daily-sales")) {
-                report = new DailySalesReport(this.database, this.period);
+                report = new DailySalesReport(this.database, this.period, "Daily Sales Report");
             }
 
         return report;

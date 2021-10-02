@@ -1,5 +1,6 @@
 package com.rgsystem.excelsheet;
 
+import com.rgsystem.excelsheet.cellformat.CellFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,8 +13,8 @@ import java.sql.SQLException;
 public class ExcelSheetTableHeader extends ExcelSheet{
 
 
-    public ExcelSheetTableHeader(ResultSet result, XSSFSheet sheet, XSSFWorkbook workbook) {
-        super(result, sheet, workbook);
+    public ExcelSheetTableHeader(ResultSet result, XSSFSheet sheet, XSSFWorkbook workbook, CellFormat format) {
+        super(result, sheet, workbook,format);
     }
 
     @Override
@@ -25,13 +26,15 @@ public class ExcelSheetTableHeader extends ExcelSheet{
         int numberOfColumns = metaData.getColumnCount();
         int numberOfRows = sheet.getPhysicalNumberOfRows();
 
-        Row headerRow = super.sheet.createRow(numberOfRows+3);
+        Row headerRow = super.sheet.createRow(numberOfRows+2);
 
         // exclude the first column which is the ID field
         for (int i = 1; i <= numberOfColumns; i++) {
             String columnName = metaData.getColumnName(i);
             Cell headerCell = headerRow.createCell(i-1);
             headerCell.setCellValue(columnName);
+            headerCell.setCellStyle(this.format.formatCell(workbook, headerCell));
+            super.sheet.autoSizeColumn(i-1);
         }
 
     }

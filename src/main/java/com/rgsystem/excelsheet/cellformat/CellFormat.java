@@ -1,10 +1,11 @@
 package com.rgsystem.excelsheet.cellformat;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public interface CellFormat {
 
-    void formatCell(XSSFWorkbook workbook, Cell cell);
+    CellStyle formatCell(XSSFWorkbook workbook, Cell cell);
 
 }

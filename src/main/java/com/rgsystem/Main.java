@@ -10,7 +10,7 @@ import com.rgsystem.input.CommandLineInputs;
 
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
 
         DBConnection connection = new SQLConnection(
                 "jdbc:mysql://localhost:3306/bookbae",
@@ -24,5 +24,6 @@ public class Main {
 
         //start the app
         app.execute();
+
     }
 }

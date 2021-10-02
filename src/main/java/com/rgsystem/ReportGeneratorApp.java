@@ -39,6 +39,7 @@ public class ReportGeneratorApp {
             ReportFactory factory = new ReportFactory(this.database, period);
             String reportType = inputs.getReportType();
             Report report = factory.getInstance(reportType);
+            String reportTitle = report.getReportTitle();
 
             //Report results
             ReportResult summaryReportResult = report.getSummaryReport();
@@ -48,8 +49,9 @@ public class ReportGeneratorApp {
             ResultSet summaryReport = summaryReportResult.getResult();
             ResultSet fullReport = fullReportResult.getResult();
 
+
             ExcelFileOutput output = new ExcelFileOutput(inputs.getReportType());
-            XSSFWorkbook workBook = output.getWorkBook(summaryReport, fullReport);
+            XSSFWorkbook workBook = output.getWorkBook(summaryReport, fullReport, reportTitle);
             WorkBookWriter writer = new WorkBookWriter(workBook);
 
             //file path
