@@ -11,7 +11,15 @@ public class ServerProperties {
     protected String userName="lbookbae@gmail.com";
     protected String password="bookbae1234";
 
-    protected Properties setServerProperties(){
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    protected Properties getServerProperties(){
         //set SMTP server properties
         Properties properties=new Properties();
         properties.put("mail.smtp.host", host);
