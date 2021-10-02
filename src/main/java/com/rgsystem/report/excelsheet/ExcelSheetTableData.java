@@ -48,6 +48,9 @@ public class ExcelSheetTableData extends ExcelSheet{
                 else {
                     cell.setCellValue((String) valueObject);
                 }
+
+                super.sheet.autoSizeColumn(i-1);
+
             }
         }
     }
