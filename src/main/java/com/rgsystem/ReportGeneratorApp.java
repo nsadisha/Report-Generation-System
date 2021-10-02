@@ -13,6 +13,8 @@ import com.rgsystem.report.reports.ReportGenerationFailedException;
 import com.rgsystem.report.results.NullReportException;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 public class ReportGeneratorApp {
     //database and connection
@@ -34,15 +36,24 @@ public class ReportGeneratorApp {
             this.database.connect(this.connection.getConnection());
             ReportFactory factory = new ReportFactory(this.database, this.period);
             Report report = factory.getInstance("daily-sales");
-            ReportResult reportResult = report.getReport();
+            ReportResult reportResult = report.getSummaryReport();
 
-            //test
-            while (reportResult.getResult().next()){
-                System.out.println(reportResult.getResult().getString("total_price"));
-            }
-        } catch (ConnectionFailedException | QueryExecutionFailedException | ReportGenerationFailedException | NullReportException e) {
-            System.out.println("Exception from app: " + e.getMessage());
-        } catch (SQLException e) {
+            List<Map<String, String>> rows = reportResult.getSummaryData();
+            List<String> headers = reportResult.getSummaryReportHeaders();
+
+
+            rows.forEach(item->{
+                for (String header : headers) {
+                    System.out.print(item.get(header)+"  ");
+                }
+                System.out.println();
+            });
+
+
+//        } catch (ConnectionFailedException | QueryExecutionFailedException | ReportGenerationFailedException | NullReportException e) {
+//            System.out.println("Exception from app: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

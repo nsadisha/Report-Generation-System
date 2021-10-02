@@ -1,19 +1,29 @@
 package com.rgsystem.report.results;
 
 import com.rgsystem.report.ReportResult;
-import java.sql.ResultSet;
+
+import java.util.List;
+import java.util.Map;
 
 public class DailySalesResult implements ReportResult {
-    ResultSet result;
+    private List<String> summaryReportHeaders;
+    private List<Map<String, String>> summaryData;
 
-    public DailySalesResult(ResultSet result) {
-        this.result = result;
+    //setter and getter for summary report headers
+    public void setSummaryReportHeaders(List<String> headers){
+        this.summaryReportHeaders = headers;
+    }
+    public List<String> getSummaryReportHeaders(){
+        return this.summaryReportHeaders;
     }
 
-    public ResultSet getResult() throws NullReportException {
-        if(this.result == null){
-            throw new NullReportException("Result from the report is null");
-        }
-        return this.result;
+    //setter and getter for summary data
+    public void setSummaryData(List<Map<String, String>> data){
+        this.summaryData = data;
     }
+
+    public List<Map<String, String>> getSummaryData(){
+        return this.summaryData;
+    }
+
 }
