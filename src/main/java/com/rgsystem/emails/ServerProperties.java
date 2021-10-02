@@ -1,36 +1,49 @@
 package com.rgsystem.emails;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import java.util.Properties;
 
 public class ServerProperties {
-    protected String host="smtp.gmail.com";
-    protected String port="587";
-    protected String userName="lbookbae@gmail.com";
-    protected String password="bookbae1234";
+
+    private String host="smtp.gmail.com";
+    private String port="587";
+    private String userName="lbookbae@gmail.com";
+    private String password="bookbae1234";
+
+
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getUserName() {
         return userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword() {
         return password;
     }
 
-    protected Properties getServerProperties(){
-        //set SMTP server properties
-        Properties properties=new Properties();
+    public Properties setServerProperties() {
+
+        Properties properties = new Properties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", port);
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.user", userName);
         properties.put("mail.password", password);
-
         return properties;
     }
-
-
 }
