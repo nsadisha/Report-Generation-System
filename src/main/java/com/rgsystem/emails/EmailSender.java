@@ -7,10 +7,7 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
@@ -19,8 +16,8 @@ public class EmailSender {
 
     private  ServerProperties serverProperties;
 
-    public void send(Email email) throws MessagingException, IOException {
-
+    public void send(Email email) throws MessageSendingException, IOException {
+    try {
         Message message = new MimeMessage(createSession());
         Address addressTo = new InternetAddress(email.getToAddress());
 
@@ -36,6 +33,9 @@ public class EmailSender {
         message.setContent(multipart);
 
         Transport.send(message);
+    }catch (MessagingException e){
+        throw new MessageSendingException(e);
+    }
     }
 
     protected Session createSession(){

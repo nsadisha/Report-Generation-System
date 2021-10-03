@@ -3,6 +3,7 @@ package com.rgsystem;
 import com.rgsystem.emails.Attachment;
 import com.rgsystem.emails.Email;
 import com.rgsystem.emails.EmailSender;
+import com.rgsystem.emails.MessageSendingException;
 import com.rgsystem.report.EmailBody;
 import com.rgsystem.report.EmailBodyGenerator;
 
