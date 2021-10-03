@@ -2,6 +2,7 @@ package com.rgsystem.excelsheet;
 
 import com.rgsystem.excelsheet.cellformat.CellFormat;
 import com.rgsystem.excelsheet.cellformat.DateCellFormat;
+import com.rgsystem.excelsheet.cellformat.DateFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -20,8 +21,8 @@ public class ExcelSheetTableData extends ExcelSheet{
 
         ResultSetMetaData metaData = super.result.getMetaData();
         int numberOfColumns = metaData.getColumnCount();
-        int numberOfRows = sheet.getPhysicalNumberOfRows();
-        int rowCount = numberOfRows+3;
+        int numberOfRows = sheet.getLastRowNum();
+        int rowCount = numberOfRows+1;
 
         while (super.result.next()) {
             Row row = super.sheet.createRow(rowCount++);
@@ -33,27 +34,35 @@ public class ExcelSheetTableData extends ExcelSheet{
 
                 if (valueObject instanceof Boolean) {
                     cell.setCellValue((Boolean) valueObject);
+                    cell.setCellStyle(this.format.formatCell(workbook, cell));
+
                 }
                 else if (valueObject instanceof Double) {
                     cell.setCellValue((double) valueObject);
+                    cell.setCellStyle(this.format.formatCell(workbook, cell));
+
                 }
                 else if (valueObject instanceof Long) {
                     cell.setCellValue((long) valueObject);
+                    cell.setCellStyle(this.format.formatCell(workbook, cell));
+
                 }
                 else if (valueObject instanceof Float) {
                     cell.setCellValue((float) valueObject);
+                    cell.setCellStyle(this.format.formatCell(workbook, cell));
+
                 }
                 else if (valueObject instanceof Date) {
-                    CellFormat dateCellFormat = new DateCellFormat();
-                    dateCellFormat.formatCell(workbook, cell);
+                    DateFormat dateCellFormat = new DateCellFormat();
                     cell.setCellValue((Date) valueObject);
+                    cell.setCellStyle(dateCellFormat.formatDateCell(workbook, this.format.formatCell(workbook, cell)));
                 }
                 else {
                     cell.setCellValue((String) valueObject);
+                    cell.setCellStyle(this.format.formatCell(workbook, cell));
                 }
 
                 super.sheet.autoSizeColumn(i-1);
-                cell.setCellStyle(this.format.formatCell(workbook, cell));
 
             }
         }

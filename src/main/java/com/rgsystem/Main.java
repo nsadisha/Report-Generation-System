@@ -8,7 +8,6 @@ import com.rgsystem.input.Inputs;
 import com.rgsystem.input.CommandLineInputs;
 
 
-
 public class Main {
     public static void main(String[] args){
 

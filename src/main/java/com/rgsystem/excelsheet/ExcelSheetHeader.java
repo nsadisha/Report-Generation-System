@@ -20,7 +20,8 @@ public class ExcelSheetHeader extends ExcelSheet{
 
         Row headerRow = super.sheet.createRow(0);
 
-        CellRangeAddress cellMerge = new CellRangeAddress(0,2,0,8);
+        CellRangeAddress cellMerge = new CellRangeAddress(0,2,0,4);
+
         super.sheet.addMergedRegion(cellMerge);
 
         Cell headerCell = headerRow.createCell(0);
