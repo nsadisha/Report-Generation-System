@@ -24,9 +24,10 @@ public class ExcelSheetTableHeader extends ExcelSheet{
         ResultSetMetaData metaData = super.result.getMetaData();
 
         int numberOfColumns = metaData.getColumnCount();
-        int numberOfRows = sheet.getPhysicalNumberOfRows();
+        int numberOfRows = sheet.getLastRowNum();
+        int rowCount = numberOfRows+2;
 
-        Row headerRow = super.sheet.createRow(numberOfRows+2);
+        Row headerRow = super.sheet.createRow(rowCount);
 
         // exclude the first column which is the ID field
         for (int i = 1; i <= numberOfColumns; i++) {
