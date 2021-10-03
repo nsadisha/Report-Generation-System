@@ -1,37 +1,30 @@
 package com.rgsystem;
 
-import com.rgsystem.emails.Attachment;
-import com.rgsystem.emails.Email;
-import com.rgsystem.emails.EmailSender;
-import com.rgsystem.emails.MessageSendingException;
-import com.rgsystem.report.EmailBody;
-import com.rgsystem.report.EmailBodyGenerator;
+import com.rgsystem.connection.DBConnection;
+import com.rgsystem.connection.SQLConnection;
+import com.rgsystem.database.Database;
+import com.rgsystem.database.SQLDatabase;
+import com.rgsystem.input.Inputs;
+import com.rgsystem.input.CommandLineInputs;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
+
 
 public class Main {
-    public static void main(String[] args) throws IOException, MessagingException {
+    public static void main(String[] args){
 
-        String startingMonth = "January";
-        String endingMonth = "February";
-        String fileName = "test.pdf";
-        String receiverAddress="tharu.chamalsha@gmail.com";
+        DBConnection connection = new SQLConnection(
+                "jdbc:mysql://localhost:3306/bookbae",
+                "root",
+                ""
+        );
 
-        EmailBodyGenerator emailBodyGenerator = new EmailBodyGenerator();
-        EmailBody emailBody = emailBodyGenerator.generateEmailBody(startingMonth, endingMonth, fileName);
+        Database database = new SQLDatabase();
+        Inputs inputs = new CommandLineInputs(args);
+        ReportGeneratorApp app = new ReportGeneratorApp(connection, database, inputs);
 
-        EmailSender emailSender = new EmailSender();
-        Email email = new Email();
-        email.setSubject(emailBody.getSubject());
-        email.setToAddress(receiverAddress);
-        email.setAttachment(emailBody.getData());
+        //start the app
+        app.execute();
 
-        Attachment attachment = new Attachment();
-        attachment.setAttachment(emailBody.getData());
-
-        emailSender.send(email);
     }
-
 
 }
