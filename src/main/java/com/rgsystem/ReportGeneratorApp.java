@@ -2,18 +2,11 @@ package com.rgsystem;
 
 import com.rgsystem.connection.DBConnection;
 import com.rgsystem.database.Database;
-import com.rgsystem.emails.Attachment;
-import com.rgsystem.emails.Email;
-import com.rgsystem.emails.EmailSender;
 import com.rgsystem.input.Inputs;
 import com.rgsystem.input.InvalidInputException;
-import com.rgsystem.output.ExcelFileOutput;
-import com.rgsystem.output.WorkBookWriter;
+import com.rgsystem.output.OutputFactory;
+import com.rgsystem.output.Outputs;
 import com.rgsystem.report.*;
-import com.rgsystem.report.results.ReportResult;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.sql.ResultSet;
 
 public class ReportGeneratorApp {
     //database and connection
@@ -40,48 +33,20 @@ public class ReportGeneratorApp {
             ReportFactory factory = new ReportFactory(this.database, period);
             String reportType = inputs.getReportType();
             Report report = factory.getInstance(reportType);
-            String reportTitle = report.getReportTitle();
 
-            //Report results
-            ReportResult summaryReportResult = report.getSummaryReport();
-            ReportResult fullReportResult = report.getFullReport();
+            //get instance from output factory
+            String to = inputs.getUserEmail();
+            OutputFactory outputFactory = new OutputFactory(report, period, to);
 
-            //final results
-            ResultSet summaryReport = summaryReportResult.getResult();
-            ResultSet fullReport = fullReportResult.getResult();
+            String outputType = inputs.getOutputFormat();
+            Outputs output = outputFactory.getInstance(outputType);
 
-
-            ExcelFileOutput output = new ExcelFileOutput(inputs.getReportType());
-            XSSFWorkbook workBook = output.getWorkBook(summaryReport, fullReport, reportTitle);
-
-            WorkBookWriter writer = new WorkBookWriter(workBook);
-
-            //file path
-            String path = "Daily-Sales.xlsx";
-            writer.save(path);
-
-            String startingMonth = "January";
-            String endingMonth = "February";
-            String fileName = "Daily-Sales.xlsx";
-            String receiverAddress="hasinisama99@gmail.com";
-
-            EmailBodyGenerator emailBodyGenerator = new EmailBodyGenerator();
-            EmailBody emailBody = emailBodyGenerator.generateEmailBody(startingMonth, endingMonth, fileName);
-
-            EmailSender emailSender = new EmailSender();
-            Email email = new Email();
-            email.setSubject(emailBody.getSubject());
-            email.setToAddress(receiverAddress);
-            email.setAttachment(emailBody.getData());
-
-            Attachment attachment = new Attachment();
-            attachment.setAttachment(emailBody.getData());
-
-            emailSender.send(email);
-
+            //launch the action
+            output.launch();
 
         }catch(Exception e){
             System.out.println(e.getMessage());
+            e.printStackTrace();
         } catch (InvalidInputException e) {
             e.printStackTrace();
         }
