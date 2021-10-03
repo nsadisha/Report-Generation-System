@@ -28,7 +28,8 @@ public class EmailSender {
         message.setRecipient(Message.RecipientType.TO, addressTo);
 
         MimeBodyPart attachment = new MimeBodyPart();
-        attachment.attachFile(new File("test.pdf"));
+        attachment.attachFile(email.getAttachment());
+
         MimeMultipart multipart = new MimeMultipart();
         multipart.addBodyPart(attachment);
 
