@@ -29,5 +29,9 @@ hs_err_pid*
 /.idea
 Report-Generation-System.iml
 
-#excel
+#outputs
 *.xlsx
+
+#DS store
+.DS_Store
+

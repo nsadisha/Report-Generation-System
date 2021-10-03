@@ -1,6 +1,6 @@
 package com.rgsystem.ui;
 
-public interface ui {
+public interface UI {
 
     void showMessage(String message);
 

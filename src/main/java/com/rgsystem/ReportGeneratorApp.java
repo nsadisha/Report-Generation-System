@@ -11,6 +11,7 @@ import com.rgsystem.output.ExcelFileOutput;
 import com.rgsystem.output.WorkBookWriter;
 import com.rgsystem.report.*;
 import com.rgsystem.report.results.ReportResult;
+import com.rgsystem.ui.UI;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.sql.ResultSet;
@@ -20,11 +21,13 @@ public class ReportGeneratorApp {
     private final DBConnection connection;
     private final Database database;
     private final Inputs inputs;
+    private final UI ui;
 
-    public ReportGeneratorApp(DBConnection connection, Database database, Inputs inputs){
+    public ReportGeneratorApp(DBConnection connection, Database database, Inputs inputs, UI ui){
         this.connection = connection;
         this.database = database;
         this.inputs = inputs;
+        this.ui = ui;
     }
 
     public void execute(){
@@ -80,10 +83,8 @@ public class ReportGeneratorApp {
             emailSender.send(email);
 
 
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        } catch (InvalidInputException e) {
-            e.printStackTrace();
+        }catch(InvalidInputException | Exception e){
+            ui.showMessage("Error Occurred " + e.getMessage());
         }
     }
 }
