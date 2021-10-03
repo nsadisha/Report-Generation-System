@@ -26,38 +26,38 @@ public class ReportGeneratorApp {
         this.inputs = inputs;
     }
 
-    public void execute(){
-        try{
-            //connect to the database
+    public void execute() {
+        try {
+            // connect to the database
             database.connect(connection.getConnection());
 
-            Period period = new Period(
-                    this.inputs.getStartDate(),
-                    this.inputs.getEndDate()
-            );
+            Period period = new Period(this.inputs.getStartDate(), this.inputs.getEndDate());
 
             ReportFactory factory = new ReportFactory(this.database, period);
             String reportType = inputs.getReportType();
             Report report = factory.getInstance(reportType);
             String reportTitle = report.getReportTitle();
 
-            //Report results
+            // Report results
             ReportResult summaryReportResult = report.getSummaryReport();
             ReportResult fullReportResult = report.getFullReport();
 
-            //final results
+            // final results
             ResultSet summaryReport = summaryReportResult.getResult();
             ResultSet fullReport = fullReportResult.getResult();
-
 
             ExcelFileOutput output = new ExcelFileOutput(inputs.getReportType());
             XSSFWorkbook workBook = output.getWorkBook(summaryReport, fullReport, reportTitle);
             WorkBookWriter writer = new WorkBookWriter(workBook);
 
-            //file path
+            // file path
             String path = "Daily-Sales.xlsx";
             writer.save(path);
 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } catch (InvalidInputException e) {
+            e.printStackTrace();
         }
     }
 }
