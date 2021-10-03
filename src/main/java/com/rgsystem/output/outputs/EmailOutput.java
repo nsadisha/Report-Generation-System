@@ -27,33 +27,37 @@ public class EmailOutput implements Outputs {
         this.title = title;
     }
 
-    public void launch() throws Exception{
-        //generate excel sheet
-        String fileName = "report.xlsx";
-        ExcelFileOutput output = new ExcelFileOutput(this.title);
-        XSSFWorkbook workBook = output.getWorkBook(this.summaryReport, this.fullReport, this.title);
+    public void launch() throws LaunchFailException{
+        try{
+            //generate excel sheet
+            String fileName = "report.xlsx";
+            ExcelFileOutput output = new ExcelFileOutput(this.title);
+            XSSFWorkbook workBook = output.getWorkBook(this.summaryReport, this.fullReport, this.title);
 
-        WorkBookWriter writer = new WorkBookWriter(workBook);
-        //file path
-        writer.save(fileName);
+            WorkBookWriter writer = new WorkBookWriter(workBook);
+            //file path
+            writer.save(fileName);
 
-        //sending the email
-        String startingMonth = this.period.getStartDate();
-        String endingMonth = this.period.getEndDate();
-        String receiverAddress=this.to;
+            //sending the email
+            String startingMonth = this.period.getStartDate();
+            String endingMonth = this.period.getEndDate();
+            String receiverAddress=this.to;
 
-        EmailBodyGenerator emailBodyGenerator = new EmailBodyGenerator();
-        EmailBody emailBody = emailBodyGenerator.generateEmailBody(startingMonth, endingMonth, fileName);
+            EmailBodyGenerator emailBodyGenerator = new EmailBodyGenerator();
+            EmailBody emailBody = emailBodyGenerator.generateEmailBody(startingMonth, endingMonth, fileName);
 
-        EmailSender emailSender = new EmailSender();
-        Email email = new Email();
-        email.setSubject(emailBody.getSubject());
-        email.setToAddress(receiverAddress);
-        email.setAttachment(emailBody.getData());
+            EmailSender emailSender = new EmailSender();
+            Email email = new Email();
+            email.setSubject(emailBody.getSubject());
+            email.setToAddress(receiverAddress);
+            email.setAttachment(emailBody.getData());
 
-        Attachment attachment = new Attachment();
-        attachment.setAttachment(emailBody.getData());
+            Attachment attachment = new Attachment();
+            attachment.setAttachment(emailBody.getData());
 
-        emailSender.send(email);
+            emailSender.send(email);
+        }catch (Exception e){
+            throw new LaunchFailException("Sending email launch failed: "+e.getMessage());
+        }
     }
 }

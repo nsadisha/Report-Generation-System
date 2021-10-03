@@ -18,12 +18,16 @@ public class FileOutput implements Outputs {
         this.title = title;
     }
 
-    public void launch() throws Exception{
-        ExcelFileOutput output = new ExcelFileOutput(this.title);
-        XSSFWorkbook workBook = output.getWorkBook(this.summaryReport, this.fullReport, this.title);
+    public void launch() throws LaunchFailException{
+        try{
+            ExcelFileOutput output = new ExcelFileOutput(this.title);
+            XSSFWorkbook workBook = output.getWorkBook(this.summaryReport, this.fullReport, this.title);
 
-        WorkBookWriter writer = new WorkBookWriter(workBook);
-        //file path
-        writer.save(this.to);
+            WorkBookWriter writer = new WorkBookWriter(workBook);
+            //file path
+            writer.save(this.to);
+        }catch (Exception e){
+            throw new LaunchFailException("File output launch failed: "+e.getMessage());
+        }
     }
 }
