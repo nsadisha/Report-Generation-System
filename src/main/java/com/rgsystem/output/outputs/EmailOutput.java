@@ -6,8 +6,8 @@ import com.rgsystem.emails.EmailSender;
 import com.rgsystem.output.ExcelFileOutput;
 import com.rgsystem.output.Outputs;
 import com.rgsystem.output.WorkBookWriter;
-import com.rgsystem.report.EmailBody;
-import com.rgsystem.report.EmailBodyGenerator;
+import com.rgsystem.emails.EmailBody;
+import com.rgsystem.emails.EmailBodyGenerator;
 import com.rgsystem.report.Period;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
