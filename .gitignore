@@ -24,5 +24,10 @@ hs_err_pid*
 
 #target
 /target
+
+#idea
 /.idea
 Report-Generation-System.iml
+
+#excel
+.xlsx

@@ -24,15 +24,15 @@ public class ExcelFileOutput implements Outputs{
             excelSheetHeader.writeLines(reportTitle);
 
             //-------------------Writing summary report-------------------
-            //writing table header
-            CellFormat tableHeaderFormat = new TableHeaderFormat();
-            ExcelSheet summaryReportTableHeader = new ExcelSheetTableHeader(summaryReport, sheet, workbook, tableHeaderFormat);
-            summaryReportTableHeader.writeLines();
-
             //writing table title
             CellFormat tableTitleFormat = new TableTitlteFormat();
             ExcelSheet summaryReportTableTitle = new ExcelSheetTableTitle(summaryReport, sheet, workbook, tableTitleFormat);
             summaryReportTableTitle.writeLines("Summary Report");
+
+            //writing table header
+            CellFormat tableHeaderFormat = new TableHeaderFormat();
+            ExcelSheet summaryReportTableHeader = new ExcelSheetTableHeader(summaryReport, sheet, workbook, tableHeaderFormat);
+            summaryReportTableHeader.writeLines();
 
             //writing table data
             CellFormat tableCellFormat = new TableCellFormat();
@@ -40,13 +40,13 @@ public class ExcelFileOutput implements Outputs{
             summaryReportTableData.writeLines();
 
             //-------------------Writing full report-------------------
-            //writing table header
-            ExcelSheet fullReportTableHeader = new ExcelSheetTableHeader(fullReport, sheet, workbook, tableHeaderFormat);
-            fullReportTableHeader.writeLines();
-
             //writing table title
             ExcelSheet fullReportTableTitle = new ExcelSheetTableTitle(summaryReport, sheet, workbook, tableTitleFormat);
             fullReportTableTitle.writeLines("Detailed Report");
+
+            //writing table header
+            ExcelSheet fullReportTableHeader = new ExcelSheetTableHeader(fullReport, sheet, workbook, tableHeaderFormat);
+            fullReportTableHeader.writeLines();
 
             //writing table data
             ExcelSheet fullReportTableData = new ExcelSheetTableData(fullReport, sheet, workbook, tableCellFormat);
