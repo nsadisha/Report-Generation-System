@@ -22,7 +22,7 @@ public class Main {
         );
 
         Database database = new SQLDatabase();
-        InputValidations validations = new CMDInputValidations(args);
+        InputValidations validations = new CMDInputValidations();
         Inputs inputs = new CommandLineInputs(args, validations);
         UI ui = new CmdLineUI();
         ReportGeneratorApp app = new ReportGeneratorApp(connection, database, inputs, ui);

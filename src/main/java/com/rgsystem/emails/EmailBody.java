@@ -1,4 +1,4 @@
-package com.rgsystem.report;
+package com.rgsystem.emails;
 
 import java.io.File;
 
