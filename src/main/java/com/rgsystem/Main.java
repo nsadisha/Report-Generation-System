@@ -6,7 +6,8 @@ import com.rgsystem.database.Database;
 import com.rgsystem.database.SQLDatabase;
 import com.rgsystem.input.Inputs;
 import com.rgsystem.input.CommandLineInputs;
-
+import com.rgsystem.ui.CmdLineUI;
+import com.rgsystem.ui.UI;
 
 
 public class Main {
@@ -20,7 +21,8 @@ public class Main {
 
         Database database = new SQLDatabase();
         Inputs inputs = new CommandLineInputs(args);
-        ReportGeneratorApp app = new ReportGeneratorApp(connection, database, inputs);
+        UI ui = new CmdLineUI();
+        ReportGeneratorApp app = new ReportGeneratorApp(connection, database, inputs, ui);
 
         //start the app
         app.execute();

@@ -7,17 +7,20 @@ import com.rgsystem.input.InvalidInputException;
 import com.rgsystem.output.OutputFactory;
 import com.rgsystem.output.Outputs;
 import com.rgsystem.report.*;
+import com.rgsystem.ui.UI;
 
 public class ReportGeneratorApp {
     //database and connection
     private final DBConnection connection;
     private final Database database;
     private final Inputs inputs;
+    private final UI ui;
 
-    public ReportGeneratorApp(DBConnection connection, Database database, Inputs inputs){
+    public ReportGeneratorApp(DBConnection connection, Database database, Inputs inputs, UI ui){
         this.connection = connection;
         this.database = database;
         this.inputs = inputs;
+        this.ui = ui;
     }
 
     public void execute(){
@@ -44,11 +47,8 @@ public class ReportGeneratorApp {
             //launch the action
             output.launch();
 
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } catch (InvalidInputException e) {
-            e.printStackTrace();
+        }catch(InvalidInputException | Exception e){
+            ui.showMessage("Error Occurred " + e.getMessage());
         }
     }
 }
