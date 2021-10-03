@@ -15,12 +15,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.sql.ResultSet;
 
 public class ReportGeneratorApp {
-    //database and connection
+    // database and connection
     private final DBConnection connection;
     private final Database database;
     private final Inputs inputs;
 
-    public ReportGeneratorApp(DBConnection connection, Database database, Inputs inputs){
+    public ReportGeneratorApp(DBConnection connection, Database database, Inputs inputs) {
         this.connection = connection;
         this.database = database;
         this.inputs = inputs;
@@ -58,10 +58,6 @@ public class ReportGeneratorApp {
             String path = "Daily-Sales.xlsx";
             writer.save(path);
 
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        } catch (InvalidInputException e) {
-            e.printStackTrace();
         }
     }
 }
