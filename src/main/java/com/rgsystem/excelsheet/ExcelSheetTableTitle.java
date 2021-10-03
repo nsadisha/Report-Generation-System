@@ -23,12 +23,14 @@ public class ExcelSheetTableTitle extends ExcelSheet{
         ResultSetMetaData metaData = super.result.getMetaData();
 
         int numberOfColumns = metaData.getColumnCount();
+
         int numberOfRows = sheet.getLastRowNum();
         int rowCount = numberOfRows+3;
 
         Row headerRow = super.sheet.createRow(rowCount);
 
         CellRangeAddress cellMerge = new CellRangeAddress(rowCount,rowCount+1,0,numberOfColumns-1);
+
         super.sheet.addMergedRegion(cellMerge);
 
         Cell headerCell = headerRow.createCell(0);
