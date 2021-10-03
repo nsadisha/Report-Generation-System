@@ -8,6 +8,8 @@ import com.rgsystem.input.Inputs;
 import com.rgsystem.input.CommandLineInputs;
 import com.rgsystem.ui.CmdLineUI;
 import com.rgsystem.ui.UI;
+import com.rgsystem.validation.CMDInputValidations;
+import com.rgsystem.validation.InputValidations;
 
 
 public class Main {
@@ -20,7 +22,8 @@ public class Main {
         );
 
         Database database = new SQLDatabase();
-        Inputs inputs = new CommandLineInputs(args);
+        InputValidations validations = new CMDInputValidations(args);
+        Inputs inputs = new CommandLineInputs(args, validations);
         UI ui = new CmdLineUI();
         ReportGeneratorApp app = new ReportGeneratorApp(connection, database, inputs, ui);
 

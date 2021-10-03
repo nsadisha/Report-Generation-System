@@ -1,27 +1,23 @@
 package com.rgsystem.input;
 
+import com.rgsystem.validation.InputValidations;
+
 public class CommandLineInputs implements Inputs {
 
     private final String[] args;
+    private final InputValidations validations;
 
-    public CommandLineInputs(String[] args) {
+    public CommandLineInputs(String[] args, InputValidations validations) {
         this.args = args;
+        this.validations = validations;
     }
 
     @Override
     public String getReportType() throws InvalidInputException {
 
-        String reportType = args[0];
         //Make sure to validate the arguments before using...
-        if (reportType == null) {
-            throw new InvalidInputException("Please provide the report type as an argument");
-        }
-
-        if (!(reportType.equals("daily-sales") || reportType.equals("user-signups"))) {
-            throw new InvalidInputException
-                    ("Please provide daily-sales or user-signups as the report type for first argument");
-        }
-        return reportType;
+        validations.validateReportType();
+        return args[0];
     }
 
     @Override
@@ -30,15 +26,8 @@ public class CommandLineInputs implements Inputs {
         String startDate = args[1];
 
         //Make sure to validate the arguments before using...
-        if (startDate == null) {
-            throw new InvalidInputException("Please provide the start date as the second argument");
-        }
 
-        /*if(!(isDateValid(startDate))){
-            throw new InvalidInputException("Please provide the start date in dd/mm/yyyy format");
-        } */
-
-        return startDate;
+        return args[1];
     }
 
     @Override
